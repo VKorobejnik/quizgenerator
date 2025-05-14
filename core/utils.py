@@ -3,6 +3,7 @@ import os
 import shutil
 import streamlit as st
 import json
+from datetime import datetime
 
 def get_ui_text(key, language_code="en"):
     """Helper function to get localized UI text"""
@@ -170,7 +171,6 @@ def chunk_content(text, max_chars=30000, min_chunk_size=1000):
     return chunks
 
 def save_quiz_file(quiz_data):
-    from datetime import datetime
     os.makedirs("quiz_data", exist_ok=True)
     filename = f"quiz_data/quiz_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
     with open(filename, "w") as f:

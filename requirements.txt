@@ -18,3 +18,7 @@ pikepdf==9.5.2
 # For advanced document processing:
 pdfminer.six==20250327
 PyMuPDF==1.25.3
+bcrypt
+# If you're using BERTopic or scikit-learn for clustering:
+bertopic
+scikit-learn

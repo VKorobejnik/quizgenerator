@@ -5,6 +5,8 @@ import time
 from time import sleep
 from app_config import MULTILINGUAL_EMBEDDING_MODEL, EMBEDDING_MODEL, API_KEY, BASE_URL
 from core.utils import clean_document_content, chunk_content
+from core.utils import purge_database, ensure_sample_data_dir
+import tempfile
 from langchain_community.document_loaders import UnstructuredWordDocumentLoader, UnstructuredPDFLoader
 from langchain.docstore.document import Document as LangChainDocument
 from bertopic.backend import BaseEmbedder
@@ -13,6 +15,14 @@ from datetime import datetime
 import streamlit as st
 import PyPDF2
 from openai import OpenAI
+from docx import Document
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from langchain.text_splitter import RecursiveCharacterTextSplitter
+from app_config import CHUNK_SIZE, CHUNK_OVERLAP
+from sentence_transformers import SentenceTransformer
+from sklearn.cluster import MiniBatchKMeans
+from app_config import DESIRED_TOPICS
+from bertopic import BERTopic
 
 
 # ==============================================
@@ -28,10 +38,7 @@ def load_vector_db():
         return FAISS.load_local(db_path, embeddings, allow_dangerous_deserialization=True)
     return None
 
-def process_start_document(uploaded_file):
-    from core.utils import purge_database, ensure_sample_data_dir
-    import tempfile
-    
+def process_start_document(uploaded_file): 
     """Process uploaded document and save to FAISS database"""
     start_time = time.time()
     purge_database()
@@ -102,7 +109,6 @@ def process_start_document(uploaded_file):
 # ==============================================
 
 def extract_text_from_file(uploaded_file):
-    from docx import Document
     """Extract text from uploaded file (PDF, DOCX, or TXT)"""
     file_extension = os.path.splitext(uploaded_file.name)[-1].lower()
     if file_extension == ".pdf":
@@ -384,7 +390,7 @@ def process_document(document_text, document_name, max_topics=10, max_tokens=100
     return topics_data
 
 def parallel_topic_extraction(chunks, max_topics=5, language_code="en"):
-    from concurrent.futures import ThreadPoolExecutor, as_completed
+    
     results = []
     with ThreadPoolExecutor(max_workers=5) as executor:  # Adjust based on API limits
         # Submit all tasks and keep track of their original indices
@@ -409,8 +415,7 @@ def load_document(text):
     return [LangChainDocument(page_content=text)]
 
 def chunk_text(docs):
-    from langchain.text_splitter import RecursiveCharacterTextSplitter
-    from app_config import CHUNK_SIZE, CHUNK_OVERLAP
+
     splitter = RecursiveCharacterTextSplitter(chunk_size=CHUNK_SIZE, chunk_overlap=CHUNK_OVERLAP)
     chunks = splitter.split_documents(docs)
     # Add position metadata to each chunk
@@ -421,10 +426,7 @@ def chunk_text(docs):
     return chunks
 
 def extract_topics(chunks):
-    from sentence_transformers import SentenceTransformer
-    from sklearn.cluster import MiniBatchKMeans
-    from app_config import DESIRED_TOPICS
-    from bertopic import BERTopic
+
     texts = [chunk.page_content for chunk in chunks]
 
     # Edge case: Only 1 chunk → return it as a single topic

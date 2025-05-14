@@ -3,10 +3,12 @@ import os
 import io
 import json
 import time
-from app_config import SUPPORTED_LANGUAGES
-from core.document_processor import load_vector_db, query_faiss_for_quiz, generate_mcq_json
-from core.utils import save_quiz_file
+import shutil
 from streamlit_js_eval import streamlit_js_eval
+from app_config import SUPPORTED_LANGUAGES
+from  core.utils import database_exists, purge_database, save_quiz_file
+from core.utils import database_exists, get_ui_text, validate_json
+from core.document_processor import process_document_with_semantic_preprocessing, process_document, extract_text_from_file, process_start_document, load_vector_db, query_faiss_for_quiz, generate_mcq_json
 
 
 
@@ -16,8 +18,7 @@ def document_processor_tab():
     This part processes a start document and embeds the document in a FAISS vector database 
     for use in the Quiz Generator. If the start document is already processed go to the Topic Extractor or to the Quiz Generator tab.
     """)
-    from  core.utils import database_exists, purge_database
-    from core.document_processor import process_start_document
+
     # Initialize session state
     if 'last_action' not in st.session_state:
         st.session_state.last_action = None
@@ -137,11 +138,7 @@ def document_processor_tab():
             st.session_state.logged_in = False
             st.rerun()
         
-def topic_extractor_tab():
-    import shutil
-    from core.utils import database_exists, get_ui_text
-    from core.document_processor import extract_text_from_file
-    
+def topic_extractor_tab(): 
     st.markdown("Analyze the document stored in the FAISS database and extract Key Topics. If no Key Topics are generated and not selected, the quiz questions will be randomly drawn from the Start Document.")
 
     db_path = "sample_data/faiss_db"
@@ -295,7 +292,6 @@ def topic_extractor_tab():
 
             # This will appear below the columns when processing
             if st.session_state.get("process_clicked", False):
-                    from core.document_processor import process_document_with_semantic_preprocessing, process_document
                     loading_gif = st.image("images/Acrobat.gif")
                     with st.spinner(f"Analyzing {document_name}..."):
                         try:
@@ -495,9 +491,7 @@ def quiz_generator_tab():
 
             
             
-def quiz_editor_tab():
-    from core.utils import validate_json
-    
+def quiz_editor_tab():  
     uploaded_file = st.file_uploader(
         "Upload JSON Quiz File", 
         type=['json'],
