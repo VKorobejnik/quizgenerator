@@ -24,6 +24,8 @@ pikepdf==9.5.2
 pdfminer.six==20250327
 PyMuPDF==1.25.3
 bcrypt
+PyMuPDF==1.23.5
+pikepdf==9.5.2
 # If you're using BERTopic or scikit-learn for clustering:
 bertopic
 scikit-learn
