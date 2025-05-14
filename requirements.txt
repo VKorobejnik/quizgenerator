@@ -6,6 +6,7 @@ openai==1.60.1
 streamlit-js-eval==0.1.7
 unstructured==0.17.2
 pypdf==5.2.0
+PyPDF2  # Add this line
 python-docx==1.1.2
 python-dotenv==1.0.1
 faiss-cpu==1.10.0
