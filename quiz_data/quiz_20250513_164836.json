@@ -1,0 +1,125 @@
+{
+  "questions": [
+    {
+      "question": "What is the main theme of 'The Ugly Duckling'?",
+      "options": {
+        "A": "The importance of beauty",
+        "B": "The journey to self-discovery and acceptance",
+        "C": "The cruelty of nature",
+        "D": "The value of hard work"
+      },
+      "correct_answer": "B",
+      "explanation": "The main theme of 'The Ugly Duckling' is the journey to self-discovery and acceptance, as the duckling realizes its true identity as a beautiful swan after enduring hardship and rejection. This is a Medium difficulty question as it requires understanding the underlying message of the story.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Where does the ugly duckling find refuge during the winter?",
+      "options": {
+        "A": "In a farmer's house",
+        "B": "In a frozen lake",
+        "C": "In a small cottage with an old woman, a cat, and a hen",
+        "D": "In a dense forest"
+      },
+      "correct_answer": "C",
+      "explanation": "The ugly duckling finds refuge in a small cottage with an old woman, a cat, and a hen during the harsh winter. This is an Easy question as it tests recall of a specific event in the story.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What ultimately happens to the ugly duckling?",
+      "options": {
+        "A": "It remains an outcast among ducks",
+        "B": "It transforms into a beautiful swan",
+        "C": "It becomes the leader of the ducks",
+        "D": "It returns to its original home"
+      },
+      "correct_answer": "B",
+      "explanation": "The ugly duckling transforms into a beautiful swan, realizing that it was never a duckling but a swan all along. This is an Easy question as it covers the climax of the story.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Why do the other animals reject the ugly duckling?",
+      "options": {
+        "A": "Because it cannot swim",
+        "B": "Because it is different and considered ugly",
+        "C": "Because it refuses to eat",
+        "D": "Because it is too loud"
+      },
+      "correct_answer": "B",
+      "explanation": "The other animals reject the ugly duckling because it is different and considered ugly, highlighting themes of bullying and exclusion. This is a Medium difficulty question as it requires understanding the social dynamics in the story.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What does the ugly duckling see in the water that changes its life?",
+      "options": {
+        "A": "Its reflection as a beautiful swan",
+        "B": "A school of fish",
+        "C": "The moon",
+        "D": "A hidden treasure"
+      },
+      "correct_answer": "A",
+      "explanation": "The ugly duckling sees its reflection as a beautiful swan in the water, which is the moment it realizes its true identity. This is a Hard question as it involves interpreting a pivotal moment in the story.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "How does the ugly duckling feel when it first sees the swans?",
+      "options": {
+        "A": "Jealous",
+        "B": "Indifferent",
+        "C": "Admiring and longing",
+        "D": "Afraid"
+      },
+      "correct_answer": "C",
+      "explanation": "The ugly duckling feels admiration and longing when it first sees the swans, drawn to their beauty and grace. This is a Hard question as it delves into the emotional response of the protagonist.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "What season is it when the ugly duckling transforms into a swan?",
+      "options": {
+        "A": "Winter",
+        "B": "Spring",
+        "C": "Summer",
+        "D": "Autumn"
+      },
+      "correct_answer": "B",
+      "explanation": "The transformation occurs in spring, symbolizing renewal and new beginnings. This is an Easy question as it tests recall of the seasonal setting.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What advice does the hen give to the ugly duckling?",
+      "options": {
+        "A": "To learn to lay eggs",
+        "B": "To mingle with the ducks",
+        "C": "To forget about swimming and focus on practical skills",
+        "D": "To find a new home"
+      },
+      "correct_answer": "C",
+      "explanation": "The hen advises the ugly duckling to forget about swimming and focus on practical skills like laying eggs and purring, reflecting her limited worldview. This is a Medium difficulty question as it involves understanding the hen's character and her interaction with the duckling.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What symbolizes the ugly duckling's transformation?",
+      "options": {
+        "A": "A golden crown",
+        "B": "The first snowfall",
+        "C": "The blooming of flowers",
+        "D": "Its reflection in the water"
+      },
+      "correct_answer": "D",
+      "explanation": "The ugly duckling's transformation is symbolized by its reflection in the water, revealing its true identity as a swan. This is a Hard question as it requires interpreting symbolic elements in the story.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "How do the children react when they see the transformed swan?",
+      "options": {
+        "A": "They are scared",
+        "B": "They are indifferent",
+        "C": "They are delighted and admire its beauty",
+        "D": "They try to catch it"
+      },
+      "correct_answer": "C",
+      "explanation": "The children are delighted and admire the swan's beauty, contrasting with the earlier rejection the ugly duckling faced. This is an Easy question as it tests recall of a specific scene.",
+      "difficulty": "Easy"
+    }
+  ],
+  "content_adequate": true
+}

@@ -1,0 +1,125 @@
+{
+  "questions": [
+    {
+      "question": "What is the main theme of 'The Ugly Duckling' by Hans Christian Andersen?",
+      "options": {
+        "A": "The importance of beauty",
+        "B": "The journey to self-discovery and acceptance",
+        "C": "The cruelty of nature",
+        "D": "The value of hard work"
+      },
+      "correct_answer": "B",
+      "explanation": "The main theme of 'The Ugly Duckling' is the journey to self-discovery and acceptance, as the protagonist transforms from being ostracized for his appearance to finding his true identity as a beautiful swan. This is a medium difficulty question as it requires understanding the underlying message of the story.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Where does the ugly duckling find refuge during the winter?",
+      "options": {
+        "A": "In a farmer's house",
+        "B": "Under a large leaf",
+        "C": "In a small, old cottage",
+        "D": "Among wild ducks in a marsh"
+      },
+      "correct_answer": "C",
+      "explanation": "The ugly duckling finds refuge in a small, old cottage during the harsh winter. This is an easy question as it directly references a specific event in the story.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What does the ugly duckling transform into at the end of the story?",
+      "options": {
+        "A": "A beautiful peacock",
+        "B": "A majestic eagle",
+        "C": "A graceful swan",
+        "D": "A colorful parrot"
+      },
+      "correct_answer": "C",
+      "explanation": "At the end of the story, the ugly duckling transforms into a graceful swan, realizing his true identity. This is an easy question as it is a fundamental aspect of the story's conclusion.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Why do the other animals reject the ugly duckling?",
+      "options": {
+        "A": "Because he cannot swim",
+        "B": "Because of his unusual appearance",
+        "C": "Because he is lazy",
+        "D": "Because he is too noisy"
+      },
+      "correct_answer": "B",
+      "explanation": "The other animals reject the ugly duckling primarily because of his unusual appearance, which makes him different from them. This is a medium difficulty question as it involves understanding the social dynamics within the story.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What lesson does 'The Ugly Duckling' teach?",
+      "options": {
+        "A": "Appearances are everything",
+        "B": "Patience and perseverance lead to self-discovery",
+        "C": "It's better to be alone",
+        "D": "Strength is more important than beauty"
+      },
+      "correct_answer": "B",
+      "explanation": "The story teaches that patience and perseverance through hardships can lead to self-discovery and acceptance. This is a hard question as it requires interpreting the moral lesson of the story.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "How does the ugly duckling feel when he first sees the swans?",
+      "options": {
+        "A": "Jealous",
+        "B": "Indifferent",
+        "C": "Admiring and longing",
+        "D": "Afraid"
+      },
+      "correct_answer": "C",
+      "explanation": "When the ugly duckling first sees the swans, he feels a sense of admiration and longing, drawn to their beauty and grace. This is a medium difficulty question as it delves into the emotional response of the protagonist.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What ultimately proves the ugly duckling's true identity?",
+      "options": {
+        "A": "His ability to swim",
+        "B": "His reflection in the water",
+        "C": "A test by the other animals",
+        "D": "A mark on his foot"
+      },
+      "correct_answer": "B",
+      "explanation": "The ugly duckling's true identity as a swan is ultimately proven when he sees his reflection in the water. This is a hard question as it involves a pivotal moment of realization in the story.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "Who does the ugly duckling meet in the old cottage?",
+      "options": {
+        "A": "A kind old woman",
+        "B": "A group of children",
+        "C": "A cat and a hen",
+        "D": "A family of ducks"
+      },
+      "correct_answer": "C",
+      "explanation": "In the old cottage, the ugly duckling meets a cat and a hen, who initially seem to offer him shelter but later criticize him for his differences. This is an easy question as it references a specific encounter in the story.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What season is it when the ugly duckling finally transforms?",
+      "options": {
+        "A": "Winter",
+        "B": "Spring",
+        "C": "Summer",
+        "D": "Autumn"
+      },
+      "correct_answer": "B",
+      "explanation": "The ugly duckling's transformation occurs in the spring, symbolizing renewal and new beginnings. This is a hard question as it requires recalling the seasonal setting of the story's climax.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "What do the children say when they see the transformed ugly duckling?",
+      "options": {
+        "A": "Look at that ugly bird!",
+        "B": "The new swan is the most beautiful of all!",
+        "C": "Why is that swan alone?",
+        "D": "Let's chase it away!"
+      },
+      "correct_answer": "B",
+      "explanation": "Upon seeing the transformed ugly duckling, the children exclaim that the new swan is the most beautiful of all, marking his acceptance and admiration. This is an easy question as it captures a key moment of recognition in the story.",
+      "difficulty": "Easy"
+    }
+  ],
+  "content_adequate": true
+}

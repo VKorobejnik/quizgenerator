@@ -1,0 +1,125 @@
+{
+  "questions": [
+    {
+      "question": "What is the main theme of 'The Ugly Duckling'?",
+      "options": {
+        "A": "The importance of beauty",
+        "B": "The journey to self-discovery and acceptance",
+        "C": "The cruelty of nature",
+        "D": "The value of hard work"
+      },
+      "correct_answer": "B",
+      "explanation": "The main theme of 'The Ugly Duckling' is the journey to self-discovery and acceptance, as the protagonist grows from being ostracized for his appearance to realizing his true identity as a beautiful swan. This is a medium difficulty question as it requires understanding the underlying message of the story.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Where does the ugly duckling find refuge during the winter?",
+      "options": {
+        "A": "In a farmer's house",
+        "B": "In a frozen lake",
+        "C": "In a small cottage with an old woman, a cat, and a hen",
+        "D": "In a dense forest"
+      },
+      "correct_answer": "C",
+      "explanation": "During the harsh winter, the ugly duckling finds refuge in a small cottage inhabited by an old woman, a cat, and a hen. This is an easy question as it directly references a specific event in the story.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What ultimately reveals the ugly duckling's true identity?",
+      "options": {
+        "A": "A magic spell",
+        "B": "His reflection in the water",
+        "C": "A wise old owl",
+        "D": "A royal decree"
+      },
+      "correct_answer": "B",
+      "explanation": "The ugly duckling's true identity as a swan is revealed when he sees his reflection in the water, realizing he has transformed into a beautiful bird. This is a medium difficulty question as it involves recalling a pivotal moment in the story.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "How do the other animals initially treat the ugly duckling?",
+      "options": {
+        "A": "They admire his uniqueness",
+        "B": "They ignore him completely",
+        "C": "They mock and reject him",
+        "D": "They try to help him fit in"
+      },
+      "correct_answer": "C",
+      "explanation": "The other animals mock and reject the ugly duckling because of his appearance, highlighting the story's themes of bullying and exclusion. This is an easy question as it addresses a central aspect of the narrative.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What does the ugly duckling dream of becoming?",
+      "options": {
+        "A": "A powerful king",
+        "B": "A graceful swan",
+        "C": "A fast runner",
+        "D": "A skilled fisherman"
+      },
+      "correct_answer": "B",
+      "explanation": "The ugly duckling dreams of becoming a graceful swan, which symbolizes his desire for acceptance and belonging. This is a hard question as it delves into the protagonist's inner thoughts and aspirations.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "What season is it when the ugly duckling transforms into a swan?",
+      "options": {
+        "A": "Winter",
+        "B": "Spring",
+        "C": "Summer",
+        "D": "Autumn"
+      },
+      "correct_answer": "B",
+      "explanation": "The transformation of the ugly duckling into a swan occurs in spring, symbolizing renewal and new beginnings. This is an easy question as it relates to a specific seasonal detail in the story.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Who does the ugly duckling meet that makes him feel accepted for the first time?",
+      "options": {
+        "A": "A group of ducks",
+        "B": "A family of swans",
+        "C": "A kind farmer",
+        "D": "A playful dog"
+      },
+      "correct_answer": "B",
+      "explanation": "The ugly duckling feels accepted for the first time when he meets a family of swans, who welcome him as one of their own. This is a medium difficulty question as it involves understanding the emotional turning point in the story.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What literary device is prominently used in 'The Ugly Duckling'?",
+      "options": {
+        "A": "Irony",
+        "B": "Alliteration",
+        "C": "Personification",
+        "D": "Metaphor"
+      },
+      "correct_answer": "D",
+      "explanation": "The story prominently uses metaphor, with the ugly duckling's transformation symbolizing personal growth and self-acceptance. This is a hard question as it requires knowledge of literary devices and their application in the text.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "What lesson does 'The Ugly Duckling' teach?",
+      "options": {
+        "A": "Beauty is only skin deep",
+        "B": "Patience leads to rewards",
+        "C": "True beauty comes from within",
+        "D": "All of the above"
+      },
+      "correct_answer": "D",
+      "explanation": "'The Ugly Duckling' teaches multiple lessons, including that beauty is only skin deep, patience leads to rewards, and true beauty comes from within. This is a hard question as it synthesizes the moral teachings of the story.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "How does the ugly duckling's perspective change by the end of the story?",
+      "options": {
+        "A": "He becomes arrogant",
+        "B": "He learns to accept himself",
+        "C": "He rejects his past",
+        "D": "He seeks revenge on those who mocked him"
+      },
+      "correct_answer": "B",
+      "explanation": "By the end of the story, the ugly duckling learns to accept himself, marking a significant change in his perspective and self-esteem. This is an easy question as it focuses on the protagonist's emotional development.",
+      "difficulty": "Easy"
+    }
+  ],
+  "content_adequate": true
+}

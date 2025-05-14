@@ -1,0 +1,20 @@
+streamlit==1.45.0
+langchain-community==0.3.20
+langchain-huggingface==0.1.2
+huggingface-hub==0.27.1
+openai==1.60.1
+streamlit-js-eval==0.1.7
+unstructured==0.17.2
+pypdf==5.2.0
+python-docx==1.1.2
+python-dotenv==1.0.1
+faiss-cpu==1.10.0
+sentence-transformers==3.4.1
+transformers==4.48.3
+torch==2.7.0
+# For PDF processing:
+pdf2image==1.17.0
+pikepdf==9.5.2
+# For advanced document processing:
+pdfminer.six==20250327
+PyMuPDF==1.25.3

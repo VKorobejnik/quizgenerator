@@ -1,0 +1,125 @@
+{
+  "questions": [
+    {
+      "question": "What was the main reason the ugly duckling felt different from the other ducklings?",
+      "options": {
+        "A": "It was larger and uglier",
+        "B": "It couldn't swim",
+        "C": "It didn't like to eat",
+        "D": "It was afraid of water"
+      },
+      "correct_answer": "A",
+      "explanation": "The ugly duckling was larger and considered uglier than the other ducklings, which made it feel different and outcast. This is a key theme in the story, highlighting the duckling's initial struggles with acceptance.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Where did the ugly duckling find temporary refuge after leaving the farm?",
+      "options": {
+        "A": "In a dense forest",
+        "B": "In a large city",
+        "C": "In a marsh with wild ducks",
+        "D": "On a mountain top"
+      },
+      "correct_answer": "C",
+      "explanation": "After leaving the farm, the ugly duckling found temporary refuge in a marsh where wild ducks lived. This part of the story shows the duckling's search for a place where it could belong.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What did the ugly duckling transform into at the end of the story?",
+      "options": {
+        "A": "A beautiful swan",
+        "B": "A majestic eagle",
+        "C": "A colorful peacock",
+        "D": "A graceful heron"
+      },
+      "correct_answer": "A",
+      "explanation": "The ugly duckling's transformation into a beautiful swan is the climax of the story, symbolizing personal growth and the realization of one's true beauty and potential.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How did the other animals treat the ugly duckling?",
+      "options": {
+        "A": "They admired it",
+        "B": "They ignored it",
+        "C": "They bullied and rejected it",
+        "D": "They were afraid of it"
+      },
+      "correct_answer": "C",
+      "explanation": "The other animals bullied and rejected the ugly duckling because of its appearance, which is a central conflict in the story, emphasizing themes of bullying and exclusion.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What season was it when the ugly duckling finally found happiness?",
+      "options": {
+        "A": "Winter",
+        "B": "Spring",
+        "C": "Summer",
+        "D": "Autumn"
+      },
+      "correct_answer": "B",
+      "explanation": "The ugly duckling found happiness in the spring, a time of renewal and rebirth, which mirrors its own transformation and new beginning as a swan.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What did the ugly duckling see in the water that surprised it?",
+      "options": {
+        "A": "Its reflection as a swan",
+        "B": "A school of fish",
+        "C": "A hidden treasure",
+        "D": "A lost duckling"
+      },
+      "correct_answer": "A",
+      "explanation": "Seeing its reflection as a swan was a pivotal moment for the ugly duckling, revealing its true identity and leading to its acceptance and happiness.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Why did the ugly duckling decide to leave the old woman's house?",
+      "options": {
+        "A": "It was hungry",
+        "B": "It couldn't lay eggs or purr",
+        "C": "It was chased away",
+        "D": "It found a better home"
+      },
+      "correct_answer": "B",
+      "explanation": "The ugly duckling left because it couldn't lay eggs like the hen or purr like the cat, making it feel out of place and unappreciated for who it was.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What was the reaction of the children when they saw the transformed swan?",
+      "options": {
+        "A": "They were scared",
+        "B": "They were indifferent",
+        "C": "They admired and fed it",
+        "D": "They tried to catch it"
+      },
+      "correct_answer": "C",
+      "explanation": "The children admired the swan and even fed it, showing how the ugly duckling's transformation led to acceptance and admiration from others.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "What lesson does the story of the ugly duckling primarily teach?",
+      "options": {
+        "A": "The importance of wealth",
+        "B": "The value of patience and self-discovery",
+        "C": "The need to conform",
+        "D": "The superiority of beauty"
+      },
+      "correct_answer": "B",
+      "explanation": "The story teaches the value of patience and self-discovery, showing that true beauty and happiness come from understanding and accepting oneself.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "How did the ugly duckling's mother react to its appearance initially?",
+      "options": {
+        "A": "She was proud",
+        "B": "She was ashamed",
+        "C": "She was indifferent",
+        "D": "She was protective"
+      },
+      "correct_answer": "D",
+      "explanation": "Initially, the mother was protective of the ugly duckling, despite its differences, showing a mother's unconditional love, though she later became ashamed due to societal pressures.",
+      "difficulty": "Hard"
+    }
+  ],
+  "content_adequate": true
+}

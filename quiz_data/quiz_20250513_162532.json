@@ -1,0 +1,125 @@
+{
+  "questions": [
+    {
+      "question": "What is the main theme of 'The Ugly Duckling'?",
+      "options": {
+        "A": "The importance of beauty",
+        "B": "The journey to self-discovery and acceptance",
+        "C": "The value of hard work",
+        "D": "The power of friendship"
+      },
+      "correct_answer": "B",
+      "explanation": "The main theme of 'The Ugly Duckling' is the journey to self-discovery and acceptance, as the duckling transforms into a beautiful swan and finds its true identity. This is a medium difficulty question as it requires understanding the underlying message of the story.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Where does the ugly duckling find refuge during the winter?",
+      "options": {
+        "A": "In a warm barn",
+        "B": "Under a large leaf",
+        "C": "In a small cottage with an old woman, a cat, and a hen",
+        "D": "In a cave"
+      },
+      "correct_answer": "C",
+      "explanation": "During the harsh winter, the ugly duckling finds refuge in a small cottage with an old woman, a cat, and a hen. This is an easy question as it directly references a specific event in the story.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What does the ugly duckling transform into at the end of the story?",
+      "options": {
+        "A": "A beautiful peacock",
+        "B": "A majestic eagle",
+        "C": "A graceful swan",
+        "D": "A colorful parrot"
+      },
+      "correct_answer": "C",
+      "explanation": "At the end of the story, the ugly duckling transforms into a graceful swan, realizing its true beauty and identity. This is an easy question as it is a key plot point in the story.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Why do the other animals reject the ugly duckling?",
+      "options": {
+        "A": "Because it cannot swim",
+        "B": "Because it is different and considered ugly",
+        "C": "Because it is aggressive",
+        "D": "Because it steals food"
+      },
+      "correct_answer": "B",
+      "explanation": "The other animals reject the ugly duckling because it is different and considered ugly. This reflects the story's theme of acceptance and the pain of being ostracized. This is a medium difficulty question as it requires understanding the social dynamics in the story.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What season is it when the ugly duckling finally transforms into a swan?",
+      "options": {
+        "A": "Winter",
+        "B": "Spring",
+        "C": "Summer",
+        "D": "Autumn"
+      },
+      "correct_answer": "B",
+      "explanation": "The ugly duckling transforms into a swan in the spring, symbolizing renewal and new beginnings. This is a hard question as it requires recalling a specific detail about the setting.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "How does the ugly duckling feel when it first sees the swans?",
+      "options": {
+        "A": "Jealous",
+        "B": "Indifferent",
+        "C": "Admiring and longing",
+        "D": "Angry"
+      },
+      "correct_answer": "C",
+      "explanation": "When the ugly duckling first sees the swans, it feels admiration and longing, as it is drawn to their beauty and grace. This is a hard question as it delves into the emotional response of the protagonist.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "What does the old woman in the cottage initially mistake the ugly duckling for?",
+      "options": {
+        "A": "A lost chicken",
+        "B": "A large duck",
+        "C": "A wild bird",
+        "D": "A turkey"
+      },
+      "correct_answer": "B",
+      "explanation": "The old woman in the cottage initially mistakes the ugly duckling for a large duck. This is an easy question as it references a specific interaction in the story.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What advice does the hen give to the ugly duckling in the cottage?",
+      "options": {
+        "A": "To learn to lay eggs",
+        "B": "To learn to purr and arch its back",
+        "C": "To leave and find its own kind",
+        "D": "To stay inside and avoid the cold"
+      },
+      "correct_answer": "A",
+      "explanation": "The hen advises the ugly duckling to learn to lay eggs, emphasizing practical skills over the duckling's desire to swim. This is a medium difficulty question as it involves understanding the hen's perspective.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What ultimately causes the ugly duckling to leave the cottage?",
+      "options": {
+        "A": "It is chased out by the cat",
+        "B": "It feels out of place and misunderstood",
+        "C": "The old woman forces it to leave",
+        "D": "It is attracted by the sound of other ducks"
+      },
+      "correct_answer": "B",
+      "explanation": "The ugly duckling leaves the cottage because it feels out of place and misunderstood, unable to conform to the expectations of the hen and the cat. This is a hard question as it explores the protagonist's internal conflict.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "How do the children react when they see the transformed swan?",
+      "options": {
+        "A": "They are afraid and run away",
+        "B": "They are indifferent and ignore it",
+        "C": "They admire it and call it the most beautiful swan",
+        "D": "They try to catch it"
+      },
+      "correct_answer": "C",
+      "explanation": "The children admire the transformed swan and call it the most beautiful swan, marking the duckling's final acceptance and happiness. This is an easy question as it highlights a joyful moment in the story.",
+      "difficulty": "Easy"
+    }
+  ],
+  "content_adequate": true
+}

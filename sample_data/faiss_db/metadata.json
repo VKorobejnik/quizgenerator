@@ -1,0 +1,13 @@
+{
+  "document_name": "brzydkie-kaczatko.pdf",
+  "file_size": 316444,
+  "file_type": ".pdf",
+  "embedding_model": "distiluse-base-multilingual-cased",
+  "document_pages": 1,
+  "faiss_index_info": {
+    "index_type": "<faiss.swigfaiss_avx2.IndexFlatL2; proxy of <Swig Object of type 'faiss::IndexFlatL2 *' at 0x0000021CB0647450> >",
+    "docstore_size": 1,
+    "index_size": 2093
+  },
+  "created_at": "2025-05-13T15:54:40"
+}
