@@ -5,6 +5,7 @@ huggingface-hub==0.27.1
 openai==1.60.1
 streamlit-js-eval==0.1.7
 unstructured==0.17.2
+unstructured-inference==0.8.10
 pi_heif==0.22.0
 pypdf==5.2.0
 PyPDF2  # Add this line
