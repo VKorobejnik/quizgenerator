@@ -3,7 +3,7 @@ from langchain_huggingface import HuggingFaceEmbeddings
 import os
 import time
 from time import sleep
-from app_config import MULTILINGUAL_EMBEDDING_MODEL, EMBEDDING_MODEL, API_KEY, BASE_URL
+from app_config import MULTILINGUAL_EMBEDDING_MODEL, EMBEDDING_MODEL, API_KEY, BASE_URL, LLM_MODEL
 from core.utils import clean_document_content, chunk_content
 from core.utils import purge_database, ensure_sample_data_dir
 import tempfile
@@ -313,7 +313,7 @@ def extract_topics_from_chunk(chunk, max_topics, language_code="en"):
     #print(f"Prompt: {prompt}")
     try:
         response = client.chat.completions.create(
-            model="deepseek-chat",
+            model=LLM_MODEL,
             messages=[
                 {"role": "system", "content": system_message},
                 {"role": "user", "content": prompt}
@@ -891,20 +891,19 @@ def generate_mcq_json(content, num_questions, difficulty_distribution, language_
         retry_attempts = 2  # Number of attempts to get unique questions per chunk
         fallback_attempts = 2  # Number of attempts to get fallback questions
         print(f"Content chunked in {len(content_chunks)} chunks")
+        remaining_questions = num_questions
         # First pass - try to generate from content chunks
         for chunk in content_chunks:
             try:               
                 print(f"Processing chunk {processed_chunks + 1}")
                 # Calculate remaining questions needed
-                remaining_questions = num_questions - len(all_questions)
+                #remaining_questions = num_questions - len(all_questions)
                 #print(f"Remaining questions {remaining_questions}")
              
                 attempt = 0
                 # Try to generate questions from this chunk
                 while attempt <= retry_attempts:
                     print(f"Attempt {attempt+1}")
-                    remaining_questions = num_questions - len(all_questions)
-                    print(f"Remaining questions {remaining_questions}")
                     if remaining_questions <= 0:
                         break
                     prompt = f"""
@@ -959,7 +958,7 @@ def generate_mcq_json(content, num_questions, difficulty_distribution, language_
                     start_time = time.time()
                     print("Calling API")
                     response = client.chat.completions.create(
-                        model="deepseek-chat",
+                        model=LLM_MODEL,
                         messages=[
                             {"role": "system", "content": system_message},
                             {"role": "user", "content": prompt}
@@ -979,9 +978,13 @@ def generate_mcq_json(content, num_questions, difficulty_distribution, language_
                             generated_questions.add(question_text)
                             new_questions.append(q)
 
-                        if len(new_questions) > 0:
-                            all_questions.extend(new_questions)
-                            print(f"Generated {len(new_questions)} questions")
+                    if len(new_questions) > 0:
+                        all_questions.extend(new_questions)
+                        print(f"Generated {len(new_questions)} questions")
+                    
+                    print(f"All questions {len(all_questions)}")    
+                    remaining_questions = num_questions - len(all_questions)
+                    print(f"Remaining questions {remaining_questions}")
                     retry_attempts = retry_attempts - 1
                     attempt =  attempt+1      
                     if not result.get("content_adequate", True):
@@ -992,18 +995,20 @@ def generate_mcq_json(content, num_questions, difficulty_distribution, language_
                 print(f"Processed chunk in {end_time - start_time:.2f} seconds")
 
             except Exception as e:
+                print(f"Failed to process chunk {processed_chunks + 1}: {str(e)}")
                 st.warning(f"Failed to process chunk {processed_chunks + 1}: {str(e)}")
                 continue
 
         # Second pass - generate fallback questions if we didn't get enough
         if len(all_questions) < num_questions:
             remaining = num_questions - len(all_questions)
+            print(f"Generating {remaining} fallback questions to reach requested total")
             st.info(f"Generating {remaining} fallback questions to reach requested total")
 
             for attempt in range(fallback_attempts):
                 prompt = f"""
                 Generate {remaining} additional unique quiz questions in {language_code} about these topics:
-                {', '.join(focus_topics) if focus_topics else 'General cryptography concepts'}
+                {', '.join(focus_topics) if focus_topics else 'General concepts'}
 
                 Instructions:
                 - {config['instructions']['create_different']}
@@ -1031,13 +1036,13 @@ def generate_mcq_json(content, num_questions, difficulty_distribution, language_
 
                 try:
                     response = client.chat.completions.create(
-                        model="deepseek-chat",
+                        model=LLM_MODEL,
                         messages=[
                             {"role": "system", "content": system_message},
                             {"role": "user", "content": prompt}
                         ],
                         response_format={"type": "json_object"},
-                        temperature=0.8  # Slightly higher temperature for more variety
+                        temperature=0.5  # Slightly higher temperature for more variety
                     )
 
                     result = json.loads(response.choices[0].message.content)
@@ -1051,7 +1056,7 @@ def generate_mcq_json(content, num_questions, difficulty_distribution, language_
 
                         if len(new_questions) > 0:
                             all_questions.extend(new_questions)
-                            remaining = num_questions - len(all_questions)
+                            remaining-=len(all_questions)
                             if remaining <= 0:
                                 break
 
