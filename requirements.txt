@@ -19,7 +19,7 @@ unstructured-inference==0.8.10
 unstructured.pytesseract==0.3.15
 
 # OpenCV (headless)
-opencv-python-headless==4.11.0.86
+opencv-python==4.11.0.86
 
 # Language & embeddings
 sentence-transformers==4.1.0
