@@ -1,25 +1,53 @@
+# Streamlit & App Core
 streamlit==1.45.0
-langchain-community==0.3.20
-langchain-huggingface==0.1.2
-huggingface-hub==0.27.1
-openai==1.60.1
 streamlit-js-eval==0.1.7
+python-dotenv==1.0.1
+
+# Document processing
+pdf2image==1.17.0
+PyMuPDF==1.25.3
+pikepdf==9.5.2
+pdfminer.six==20250327
+python-docx==1.1.2
+PyPDF2==3.0.1
+pypdf==5.2.0
+docx2txt==0.9
+pytesseract==0.3.13
 unstructured==0.17.2
 unstructured-inference==0.8.10
-pdf2image==1.17.0
-pikepdf==9.5.2
 unstructured.pytesseract==0.3.15
-pi_heif==0.22.0
-pypdf==5.2.0
-python-docx==1.1.2
-python-dotenv==1.0.1
-faiss-cpu==1.10.0
-sentence-transformers==3.4.1
-transformers==4.48.3
-torch==2.7.0
-pdfminer.six==20250327
-PyMuPDF==1.25.3
-bcrypt
-bertopic
-scikit-learn
-PyPDF2
+
+# Replace opencv-python with the headless version to fix libGL.so.1 error
+opencv-python-headless==4.11.0.86
+
+# Language & embeddings
+sentence-transformers==4.1.0
+transformers==4.41.0
+torch==2.2.1
+
+# Langchain & related tools
+langchain==0.3.21
+langchain-community==0.3.20
+langchain-core==0.3.48
+langchain-huggingface==0.1.2
+langchain-text-splitters==0.3.7
+
+# Vector DB
+faiss-cpu==1.11.0
+
+# Topic extraction
+bertopic==0.17.0
+scikit-learn==1.6.1
+hdbscan==0.8.40
+umap-learn==0.5.7
+
+# Other NLP tools
+nltk==3.9.1
+yake==0.4.8
+keybert==0.9.0
+
+# Miscellaneous
+python-magic==0.4.27
+tesseract==0.1.3
+Pillow==11.2.1
+requests==2.32.3
