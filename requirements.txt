@@ -3,32 +3,31 @@ streamlit==1.45.0
 streamlit-js-eval==0.1.7
 python-dotenv==1.0.1
 
-# Document processing
+# Document processing (optimized)
 pdf2image==1.17.0
-PyMuPDF==1.25.3
-pikepdf==9.5.2
-pi_heif==0.22.0
-pdfminer.six==20250327
-python-docx==1.1.2
-pypdf==5.2.0  # Use this instead of PyPDF2
-docx2txt==0.9
-pytesseract>=0.3.14  # Updated
-unstructured==0.17.2
+PyMuPDF==1.25.3  # Fastest PDF library
+pikepdf==9.5.2  # For PDF manipulation
+pypdf==5.2.0  # Modern PDF processor
+pdfminer.six==20250327  # Fallback parser
+python-docx==1.1.2  # DOCX support
+docx2txt==0.9  # Simple text extraction
+pytesseract==0.3.13 # OCR
+unstructured==0.17.2  # Advanced parsing
 unstructured-inference==0.8.10
 unstructured.pytesseract==0.3.15
+pi_heif==0.22.0  # Image support
 
-# OpenCV (headless - CRITICAL FIX)
-opencv-python-headless==4.11.0.86  # Must use headless version
-openpyxl==3.1.5
+# Computer Vision
+opencv-python-headless==4.11.0.86  # Headless is must for cloud
+Pillow==11.2.1  # Image processing
 
-
-# Language & embeddings
-sentence-transformers==4.1.0
+# NLP Stack
+sentence-transformers>=2.7.0  # Updated for compatibility
 transformers==4.41.0
-torch==2.2.1
-tokenizers==0.19.1 # Updated for Python 3.12+ compatibility
+torch>=2.3.0  # Critical update
+tokenizers==0.19.1
 
-# Langchain
+# LangChain
 langchain==0.3.21
 langchain-community==0.3.20
 langchain-core==0.3.48
@@ -36,30 +35,24 @@ langchain-huggingface==0.1.2
 langchain-text-splitters==0.3.7
 
 # Vector DB
-faiss-cpu==1.11.0
+faiss-cpu==1.11.0  # Ensure this matches torch version
 
-# Topic extraction
+# Topic Modeling
 bertopic==0.17.0
 scikit-learn==1.6.1
 hdbscan==0.8.40
 umap-learn==0.5.7
 
-# NLP tools
-nltk==3.9.1
-yake==0.4.8
-keybert==0.9.0
-
-# Miscellaneous
-python-magic==0.4.27
-tesseract==0.1.3
-Pillow==11.2.1
+# Utilities
+python-magic==0.4.27  # File type detection
+tesseract==0.1.3  # OCR backend
 requests==2.32.3
-setuptools-rust>=1.8.0  # Helps with Rust-based packages
+openpyxl==3.1.5  # Excel support
+setuptools-rust>=1.8.0
+numpy==1.26.4  # Pinned for stability
 
-#OpenAI and NLP
-
+# API Clients
 openai==1.60.1
 
-#Crypto
+# Security
 bcrypt==4.2.1
-bertopic==0.17.0
