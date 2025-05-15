@@ -24,6 +24,7 @@ opencv-python-headless==4.11.0.86
 sentence-transformers==4.1.0
 transformers==4.41.0
 torch
+tokenizers==0.19.1
 
 # Langchain & related tools
 langchain==0.3.21
