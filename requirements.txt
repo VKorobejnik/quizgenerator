@@ -23,8 +23,8 @@ opencv-python-headless==4.11.0.86
 # Language & embeddings
 sentence-transformers==4.1.0
 transformers==4.41.0
-torch
-tokenizers>=0.21.0  # Updated for Python 3.12+ compatibility
+torch==2.2.1
+tokenizers==0.19.1 # Updated for Python 3.12+ compatibility
 
 # Langchain
 langchain==0.3.21
