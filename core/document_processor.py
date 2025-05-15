@@ -7,7 +7,7 @@ from app_config import MULTILINGUAL_EMBEDDING_MODEL, EMBEDDING_MODEL, API_KEY, B
 from core.utils import clean_document_content, chunk_content
 from core.utils import purge_database, ensure_sample_data_dir
 import tempfile
-from langchain_community.document_loaders import UnstructuredWordDocumentLoader, UnstructuredPDFLoader
+from langchain_community.document_loaders import UnstructuredWordDocumentLoader, UnstructuredPDFLoader, PyPDFLoader
 from langchain.docstore.document import Document as LangChainDocument
 from bertopic.backend import BaseEmbedder
 import json
@@ -56,7 +56,7 @@ def process_start_document(uploaded_file):
         if file_extension == ".docx":
             loader = UnstructuredWordDocumentLoader(temp_file_path)
         elif file_extension == ".pdf":
-            loader = UnstructuredPDFLoader(temp_file_path)
+            loader = PyPDFLoader(temp_file_path) #UnstructuredPDFLoader(temp_file_path)
         else:
             raise ValueError("Unsupported file format!")
 
