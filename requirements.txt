@@ -21,6 +21,8 @@ numpy==1.26.4
 
 # OpenCV (headless)
 opencv-python==4.11.0.86
+openpyxl==3.1.5
+
 
 # Language & embeddings
 sentence-transformers==4.1.0
