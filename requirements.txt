@@ -22,3 +22,4 @@ PyMuPDF==1.25.3
 bcrypt
 bertopic
 scikit-learn
+PyPDF2
