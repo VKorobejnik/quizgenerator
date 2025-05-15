@@ -1,0 +1,7 @@
+# OCR and PDF processing
+tesseract-ocr
+tesseract-ocr-all  # For all languages
+poppler-utils
+libgl1
+libglib2.0-0
+libleptonica-dev
