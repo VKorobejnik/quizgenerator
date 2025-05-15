@@ -13,7 +13,7 @@ from bertopic.backend import BaseEmbedder
 import json
 from datetime import datetime
 import streamlit as st
-import PyPDF2
+import pypdf
 from openai import OpenAI
 from docx import Document
 from concurrent.futures import ThreadPoolExecutor, as_completed
@@ -112,7 +112,7 @@ def extract_text_from_file(uploaded_file):
     """Extract text from uploaded file (PDF, DOCX, or TXT)"""
     file_extension = os.path.splitext(uploaded_file.name)[-1].lower()
     if file_extension == ".pdf":
-        reader = PyPDF2.PdfReader(uploaded_file)
+        reader = pypdf.PdfReader(uploaded_file)
         return "\n".join([page.extract_text() for page in reader.pages])
     elif file_extension == ".docx":
         doc = Document(uploaded_file)
