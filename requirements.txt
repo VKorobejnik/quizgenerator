@@ -52,6 +52,7 @@ requests==2.32.3
 openpyxl==3.1.5  # Excel support
 setuptools-rust>=1.8.0
 numpy==1.26.4  # Pinned for stability
+hf_xet
 
 # API Clients
 openai==1.60.1
