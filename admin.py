@@ -2,7 +2,6 @@ import streamlit as st
 import json
 import base64
 import bcrypt
-import os
 
 USER_DATA_FILE = "user_data.b64"
 

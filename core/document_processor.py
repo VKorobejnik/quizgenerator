@@ -7,7 +7,7 @@ from app_config import MULTILINGUAL_EMBEDDING_MODEL, EMBEDDING_MODEL, API_KEY, B
 from core.utils import clean_document_content, chunk_content
 from core.utils import purge_database, ensure_sample_data_dir
 import tempfile
-from langchain_community.document_loaders import UnstructuredWordDocumentLoader, UnstructuredPDFLoader, PyPDFLoader
+from langchain_community.document_loaders import UnstructuredWordDocumentLoader, PyPDFLoader
 from langchain.docstore.document import Document as LangChainDocument
 from bertopic.backend import BaseEmbedder
 import json
