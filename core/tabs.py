@@ -7,7 +7,7 @@ import shutil
 from streamlit_js_eval import streamlit_js_eval
 from app_config import SUPPORTED_LANGUAGES
 from  core.utils import database_exists, purge_database, save_quiz_file
-from core.utils import database_exists, get_ui_text, validate_json
+from core.utils import database_exists, get_ui_text, validate_json, cleanup_memory
 from core.document_processor import process_document_with_semantic_preprocessing, process_document, extract_text_from_file, process_start_document, load_vector_db, query_faiss_for_quiz, generate_mcq_json
 
 
@@ -135,7 +135,8 @@ def document_processor_tab():
         if st.button("Logout", help="Leave the application and go to the Login page.", key="logout_document_processor"):
             logout_placeholder = st.empty()
             logout_placeholder.info("Logging out...")
-            st.session_state.logged_in = False
+            st.session_state.clear()
+            cleanup_memory()
             st.rerun()
         
 def topic_extractor_tab(): 
@@ -320,6 +321,7 @@ def topic_extractor_tab():
                             print(f"Processing failed: {str(e)}")
                         finally:
                             loading_gif.empty()
+                            cleanup_memory()
                             
 def quiz_generator_tab():
     # Database status section
@@ -486,6 +488,7 @@ def quiz_generator_tab():
                     finally:
                         gif_placeholder.empty()
                         st.session_state["generate_clicked"] = False
+                        cleanup_memory()
 
   
 
@@ -545,21 +548,15 @@ def quiz_editor_tab():
 
         with col3:
             if st.button("Logout", help="Leave the editor and go to the Login screen"):
-                keys_to_clear = [
-                "original_content", 
-                "edited_content", 
-                "file_path",
-                "json_editor"  # This resets the text area
-                ]
-                for key in keys_to_clear:
-                   if key in st.session_state:
-                      del st.session_state[key]
+                st.session_state.clear()
+                cleanup_memory()
                 streamlit_js_eval(js_expressions="parent.window.location.reload()")
     else:
         if st.button("Logout", help="Leave the application and go to the Login page.", key="logout_document_editor"):
             logout_placeholder = st.empty()
             logout_placeholder.info("Logging out...")
-            st.session_state.logged_in = False
+            st.session_state.clear()
+            cleanup_memory()
             st.rerun()
                     
 def help_tab():

@@ -4,6 +4,7 @@ import shutil
 import streamlit as st
 import json
 from datetime import datetime
+import gc
 
 def get_ui_text(key, language_code="en"):
     """Helper function to get localized UI text"""
@@ -122,9 +123,16 @@ def purge_database():
                 return False, f"Failed to delete {file_path}: {e}"
 
         # Update session state to reflect database deletion
-        st.session_state["db_exists"] = False  
-        st.session_state["uploaded_file_name"] = None  # Purge uploaded document from session_state
-        st.session_state["document_processed"] = False  # Reset document processed flag
+        KEEP_KEYS = ['logged_in', 'username']
+
+        # Delete all except specified keys
+        for key in list(st.session_state.keys()):
+            if key not in KEEP_KEYS:
+                del st.session_state[key]
+        cleanup_memory()        
+        #st.session_state["db_exists"] = False  
+        #st.session_state["uploaded_file_name"] = None  # Purge uploaded document from session_state
+        #st.session_state["document_processed"] = False  # Reset document processed flag
         return True, "Database purged successfully!"
     except Exception as e:
         return False, f"Error during purge: {e}" 
@@ -176,3 +184,7 @@ def save_quiz_file(quiz_data):
     with open(filename, "w") as f:
         json.dump(quiz_data, f, indent=2)
     return filename  
+
+def cleanup_memory():
+    gc.collect()
+    st.cache_data.clear()
