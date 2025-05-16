@@ -708,7 +708,13 @@ def process_document_with_semantic_preprocessing(document_text, document_name, m
 
 def query_faiss_for_quiz(vector_db):
     retriever = vector_db.as_retriever(search_type="similarity", search_kwargs={"k": 10})
-    results = retriever.invoke("Generate quiz based on stored documents")
+    if 'selected_topics' in st.session_state:
+        focus_topics = st.session_state.selected_topics
+    else:
+        focus_topics = []
+    if focus_topics and len(focus_topics) > 0:
+        topic_focus_prompt = f"focus specifically on these key topics: {', '.join(focus_topics)}"
+    results = retriever.invoke(f"Generate quiz based on stored documents, {topic_focus_prompt}")
     return " ".join([result.page_content for result in results]) if results else None
 
 def generate_mcq_json(content, num_questions, difficulty_distribution, language_code="en"):
@@ -879,21 +885,21 @@ def generate_mcq_json(content, num_questions, difficulty_distribution, language_
 
             topic_focus_prompt = f"\n- {topic_focus_key} {', '.join(focus_topics)}"
     
-    if len(content) > 32000:  
-        print("Content > 32000, starting content chunking")
-        start_time = time.time()
-        content_chunks = chunk_content(content)
-        end_time = time.time()
-        print(f"Content chunked in {end_time - start_time:.2f} seconds")
-        generated_questions = set()
-        all_questions = []
-        processed_chunks = 0
-        retry_attempts = 2  # Number of attempts to get unique questions per chunk
-        fallback_attempts = 2  # Number of attempts to get fallback questions
-        print(f"Content chunked in {len(content_chunks)} chunks")
-        remaining_questions = num_questions
+    #if len(content) > 32000:  
+    print("Starting content chunking")
+    start_time = time.time()
+    content_chunks = chunk_content(content)
+    end_time = time.time()
+    print(f"Content chunked in {end_time - start_time:.2f} seconds")
+    generated_questions = set()
+    all_questions = []
+    processed_chunks = 0
+    retry_attempts = 2  # Number of attempts to get unique questions per chunk
+    fallback_attempts = 2  # Number of attempts to get fallback questions
+    print(f"Content chunked in {len(content_chunks)} chunks")
+    remaining_questions = num_questions
         # First pass - try to generate from content chunks
-        for chunk in content_chunks:
+    for chunk in content_chunks:
             try:               
                 print(f"Processing chunk {processed_chunks + 1}")
                 # Calculate remaining questions needed
@@ -999,8 +1005,8 @@ def generate_mcq_json(content, num_questions, difficulty_distribution, language_
                 st.warning(f"Failed to process chunk {processed_chunks + 1}: {str(e)}")
                 continue
 
-        # Second pass - generate fallback questions if we didn't get enough
-        if len(all_questions) < num_questions:
+    # Second pass - generate fallback questions if we didn't get enough
+    if len(all_questions) < num_questions:
             remaining = num_questions - len(all_questions)
             print(f"Generating {remaining} fallback questions to reach requested total")
             st.info(f"Generating {remaining} fallback questions to reach requested total")
@@ -1065,10 +1071,10 @@ def generate_mcq_json(content, num_questions, difficulty_distribution, language_
                     continue
 
         # Final quality check and trim to exact count
-        final_questions = []
-        seen_questions = set()
+    final_questions = []
+    seen_questions = set()
 
-        for q in all_questions:
+    for q in all_questions:
             question_text = q["question"].lower().strip()
             if question_text not in seen_questions:
                 seen_questions.add(question_text)
@@ -1077,11 +1083,11 @@ def generate_mcq_json(content, num_questions, difficulty_distribution, language_
                 #st.warning(f"Removed duplicate question: {q['question'][:50]}...")
 
         # If we're still short (shouldn't happen but just in case)
-        if len(final_questions) < num_questions:
+    if len(final_questions) < num_questions:
             st.warning(f"Only able to generate {len(final_questions)} out of requested {num_questions} questions")
 
         # Build final quiz
-        quiz_data = {
+    quiz_data = {
             "quiz_title": f"{config['quiz_title']} ({difficulty_distribution['easy']} {config['difficulty_levels'][0]}/"
                         f"{difficulty_distribution['medium']} {config['difficulty_levels'][1]}/"
                         f"{difficulty_distribution['hard']} {config['difficulty_levels'][2]})",
@@ -1091,78 +1097,79 @@ def generate_mcq_json(content, num_questions, difficulty_distribution, language_
                 (" + fallback questions" if len(final_questions) > len(all_questions) - len(final_questions) else "")
         }
 
-        return quiz_data
-    else:
-        print("Content <= 32000, starting quiz generation")
-        prompt = f"""
-                    Generate {num_questions} unique quiz questions in {language_code} with these rules:
-                    - RANDOMIZE correct answer positions (approximately equal distribution of A/B/C/D)
-                    - Correct answers should NOT follow patterns (e.g., not all B's)
-                    - When possible, distribute as:
-                    - 25% A correct
-                    - 25% B correct
-                    - 25% C correct
-                    - 25% D correct 
-                    from this content chunk:
-                    {content}
+    return quiz_data
+    # else:
+    #     print("Content <= 32000, starting quiz generation")
+    #     prompt = f"""
+    #                 Generate {num_questions} unique quiz questions in {language_code} with these rules:
+    #                 - RANDOMIZE correct answer positions (approximately equal distribution of A/B/C/D)
+    #                 - Correct answers should NOT follow patterns (e.g., not all B's)
+    #                 - When possible, distribute as:
+    #                 - 25% A correct
+    #                 - 25% B correct
+    #                 - 25% C correct
+    #                 - 25% D correct 
+    #                 from this content chunk:
+    #                 {content}
 
-                    Instructions:
-                    - {config['instructions']['create_different']}
-                    - {config['instructions']['options']}
-                    - {config['instructions']['randomize']}
-                    - Difficulty distribution:
-                    - {difficulty_prompt}
-                    {topic_focus_prompt}
-                    - {config['instructions']['difficulty']}
-                    - {config['instructions']['avoid']}
-                    - {config['instructions']['plausible']}
-                    - {config['instructions']['explanations']}
-                    - {config['instructions']['uniqueness']}
+    #                 Instructions:
+    #                 - {config['instructions']['create_different']}
+    #                 - {config['instructions']['options']}
+    #                 - {config['instructions']['randomize']}
+    #                 - Difficulty distribution:
+    #                 - {difficulty_prompt}
+    #                 {topic_focus_prompt}
+    #                 - {config['instructions']['difficulty']}
+    #                 - {config['instructions']['avoid']}
+    #                 - {config['instructions']['plausible']}
+    #                 - {config['instructions']['explanations']}
+    #                 - {config['instructions']['uniqueness']}
 
-                    Important: 
-                    - Before generating each question, check that it hasn't been asked before in any form
-                    - Questions should test different knowledge aspects even if they cover similar topics
-                    - If you can't generate enough questions from this specific content, indicate that
+    #                 Important: 
+    #                 - Before generating each question, check that it hasn't been asked before in any form
+    #                 - Questions should test different knowledge aspects even if they cover similar topics
+    #                 - If you can't generate enough questions from this specific content, indicate that
 
-                    Return JSON format:
-                    {{
-                        "questions": [
-                            {{
-                                "question": "text",
-                                "options": {{
-                                    "A": "option 1",
-                                    "B": "option 2", 
-                                    "C": "option 3",
-                                    "D": "option 4"
-                                }},
-                                "correct_answer": "A-D",
-                                "explanation": "text",
-                                "difficulty": "Easy/Medium/Hard"
-                            }}
-                        ],
-                        "content_adequate": true/false (whether this content could yield more questions)
-                    }}
-                    """
+    #                 Return JSON format:
+    #                 {{
+    #                     "questions": [
+    #                         {{
+    #                             "question": "text",
+    #                             "options": {{
+    #                                 "A": "option 1",
+    #                                 "B": "option 2", 
+    #                                 "C": "option 3",
+    #                                 "D": "option 4"
+    #                             }},
+    #                             "correct_answer": "A-D",
+    #                             "explanation": "text",
+    #                             "difficulty": "Easy/Medium/Hard"
+    #                         }}
+    #                     ],
+    #                     "content_adequate": true/false (whether this content could yield more questions)
+    #                 }}
+    #                 """
 
 
-        try:
-            start_time = time.time()
-            response = client.chat.completions.create(
-                model="deepseek-chat",
-                messages=[
-                        {"role": "system", "content": system_message},
-                        {"role": "user", "content": prompt}
-                ],
-                response_format={"type": "json_object"},
-                temperature=0.7
-            )
-            end_time = time.time()
-            print(f"Responce processed in {end_time - start_time:.2f} seconds")
-            quiz_data = json.loads(response.choices[0].message.content)
-            return quiz_data
+    #     try:
+    #         start_time = time.time()
+    #         print(prompt)
+    #         response = client.chat.completions.create(
+    #             model="deepseek-chat",
+    #             messages=[
+    #                     {"role": "system", "content": system_message},
+    #                     {"role": "user", "content": prompt}
+    #             ],
+    #             response_format={"type": "json_object"},
+    #             temperature=0.7
+    #         )
+    #         end_time = time.time()
+    #         print(f"Responce processed in {end_time - start_time:.2f} seconds")
+    #         quiz_data = json.loads(response.choices[0].message.content)
+    #         return quiz_data
 
-        except Exception as e:
-                st.error(f"Generation failed: {str(e)}")
-                return None
+    #     except Exception as e:
+    #             st.error(f"Generation failed: {str(e)}")
+    #             return None
             
 
