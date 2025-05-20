@@ -489,10 +489,6 @@ def quiz_generator_tab():
                         gif_placeholder.empty()
                         st.session_state["generate_clicked"] = False
                         cleanup_memory()
-
-  
-
-            
             
 def quiz_editor_tab():  
     uploaded_file = st.file_uploader(

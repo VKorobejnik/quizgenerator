@@ -425,7 +425,7 @@ def chunk_text(docs):
         current_pos += len(chunk.page_content)
     return chunks
 
-def extract_topics(chunks):
+def extract_topics(chunks, max_topics = DESIRED_TOPICS):
 
     texts = [chunk.page_content for chunk in chunks]
 
@@ -444,7 +444,7 @@ def extract_topics(chunks):
     # Default case: Use BERTopic with dynamic n_clusters
     model = SentenceTransformer(EMBEDDING_MODEL)
     embeddings = model.encode(texts, show_progress_bar=True)
-    n_clusters = min(DESIRED_TOPICS, len(texts) - 1)  # Ensure n_clusters < n_samples
+    n_clusters = min(max_topics, len(texts) - 1)  # Ensure n_clusters < n_samples
     kmeans = MiniBatchKMeans(n_clusters=n_clusters)
 
     topic_model = BERTopic(
@@ -661,7 +661,7 @@ def process_document_with_semantic_preprocessing(document_text, document_name, m
         print(f"Processing SHORT document in {language_code}, using LLM directly")
         return process_document(document_text, document_name, max_topics, language_code=language_code)
     print("Extracting topics...")
-    topic_model, topics, texts = extract_topics(chunks)
+    topic_model, topics, texts = extract_topics(chunks, max_topics)
     
     # Get topics in document order
     ordered_topic_ids = order_topics_by_position(texts, topics, chunks)
