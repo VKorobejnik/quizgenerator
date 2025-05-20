@@ -23,6 +23,7 @@ from sentence_transformers import SentenceTransformer
 from sklearn.cluster import MiniBatchKMeans
 from app_config import DESIRED_TOPICS
 from bertopic import BERTopic
+import random
 
 
 # ==============================================
@@ -711,8 +712,12 @@ def query_faiss_for_quiz(vector_db):
     focus_topics = []
     if 'selected_topics' in st.session_state:
         focus_topics = st.session_state.selected_topics
+  
     if focus_topics and len(focus_topics) > 0:
         topic_focus_prompt = f"focus specifically on these key topics: {', '.join(focus_topics)}"
+    else:
+        topic_focus_prompt = "focus on all available topics"
+        
     results = retriever.invoke(f"Generate quiz based on stored documents, {topic_focus_prompt}")
     return " ".join([result.page_content for result in results]) if results else None
 
@@ -887,6 +892,7 @@ def generate_mcq_json(content, num_questions, difficulty_distribution, language_
     print("Starting content chunking")
     start_time = time.time()
     content_chunks = chunk_content(content)
+    random.shuffle(content_chunks)
     end_time = time.time()
     print(f"Content chunked in {end_time - start_time:.2f} seconds")
     generated_questions = set()
@@ -910,6 +916,8 @@ def generate_mcq_json(content, num_questions, difficulty_distribution, language_
                     print(f"Attempt {attempt+1}")
                     if remaining_questions <= 0:
                         break
+                    random_seed = random.randint(0, 1000)
+                    timestamp = int(time.time())
                     prompt = f"""
                     Generate {remaining_questions} unique quiz questions in {language_code} with these rules:
                     - RANDOMIZE correct answer positions (approximately equal distribution of A/B/C/D)
@@ -921,7 +929,7 @@ def generate_mcq_json(content, num_questions, difficulty_distribution, language_
                     - 25% D correct 
                     from this content chunk:
                     {chunk}
-
+                    Random seed: {random_seed}, Timestamp: {timestamp}
                     Instructions:
                     - {config['instructions']['create_different']}
                     - {config['instructions']['options']}
@@ -961,6 +969,7 @@ def generate_mcq_json(content, num_questions, difficulty_distribution, language_
                     """
                     start_time = time.time()
                     print("Calling API")
+                    #print(prompt)
                     response = client.chat.completions.create(
                         model=LLM_MODEL,
                         messages=[
@@ -1077,7 +1086,8 @@ def generate_mcq_json(content, num_questions, difficulty_distribution, language_
             if question_text not in seen_questions:
                 seen_questions.add(question_text)
                 final_questions.append(q)
-
+    
+    random.shuffle(final_questions)
 
     # If we're still short (shouldn't happen but just in case)
     if len(final_questions) < num_questions:
