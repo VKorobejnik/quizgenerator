@@ -8,7 +8,7 @@ from app_config import SECONDARY_QUIZ_PROCESSING_PROMPT_TEMPLATE, MAIN_QUIZ_PROC
 from core.utils import clean_document_content, chunk_content,  purge_database,  ensure_sample_data_dir
 from core.utils import  get_topic_focus_key, get_language_config, get_language_name, get_system_messages
 import tempfile
-from langchain_community.document_loaders import UnstructuredWordDocumentLoader, PyPDFLoader
+from langchain_community.document_loaders import UnstructuredWordDocumentLoader, PyMuPDFLoader # UnstructuredPDFLoader  #PyPDFLoader
 from langchain.docstore.document import Document as LangChainDocument
 from bertopic.backend import BaseEmbedder
 import json
@@ -58,7 +58,7 @@ def process_start_document(uploaded_file):
         if file_extension == ".docx":
             loader = UnstructuredWordDocumentLoader(temp_file_path)
         elif file_extension == ".pdf":
-            loader = PyPDFLoader(temp_file_path) #UnstructuredPDFLoader(temp_file_path)
+            loader = PyMuPDFLoader(temp_file_path) #UnstructuredPDFLoader(temp_file_path)  #PyPDFLoader(temp_file_path)
         else:
             raise ValueError("Unsupported file format!")
 
