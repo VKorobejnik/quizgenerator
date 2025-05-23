@@ -556,86 +556,65 @@ def quiz_editor_tab():
             st.rerun()
                     
 def help_tab():
-    st.markdown("""
-    ###### GlobalLogic 2025 Proof of Concept: LLM-Powered Quiz Generator  
+    st.markdown(""" 
+            ###### 2025 Proof of Concept: LLM-Powered Quiz Generator  
 
-    ###### **System Requirements**  
-    - **Python Version:** 3.12.8 (Ensure you are using this exact version).  
-    - **Dependencies:** Install all required modules using the `requirements.txt` file.  
+            ###### **Application Overview**  
 
-    ###### **Setup Instructions**  
-    1. Install dependencies by running the following command in the Windows console:  
-       ```bash  
-       pip install -r requirements.txt  
-       ```  
-    2. Navigate to the generator module directory.  
-    3. Launch the GUI by running:  
-       ```bash  
-       streamlit run poc_generator.py  
-       ```  
+            **1. Login**  
+            - **Purpose:** Secure access control to the Quiz Generator application.  
+            - **Functionality:**  
+            - Authenticate users before allowing access to features.  
+            - Prevent unauthorized use by requiring login credentials.  
+            - Display access denied message for unauthorized attempts.  
 
-    ###### **Application Overview**  
+            **2. Document Processor**  
+            - **Purpose:** Upload and process the starting document (PDF or DOCX) for quiz generation.  
+            - **Functionality:**  
+            - Upload a document to embed it into the FAISS vector database.  
+            - Clear the currently loaded document from the database.  
 
-    **1. Document Processor**  
-    - **Purpose:** Upload and process the starting document (PDF or DOCX) for quiz generation.  
-    - **Functionality:**  
-      - Upload a document to embed it into the FAISS vector database.  
-      - Clear the currently loaded document from the database.  
+            **3. Topic Extractor**  
+            - **Purpose:** Analyze the Start Document and extract Key Topics. If no Key Topics are generated and not selected, the quiz questions will be randomly drawn from the Start Document.  
+            - **Prerequisite:** A document must be embedded and ready for processing by the LLM.  
+            - **Functionality:** Extract key topics from the start document.  
 
-    **2. Topic Extractor**  
-    - **Purpose:** Analyze the Start Document and extract Key Topics. If no Key Topics are generated and not selected, the quiz questions will be randomly drawn from the Start Document.  
-    - **Prerequisite:** A document must be embedded and ready for processing by the LLM.  
-    - **Functionality:** Extract key topics from the start document.  
+            **Key Topic Language**  
+            - Select language of the generated Key Topics. Currently supported: English, Polish, Romanian and Bulgarian. Default: English  
 
-    **Key Topic Language**  
-    - Select language of the generated Key Topics. Currently supported: English, Polish, Romanian and Bulgarian. Default: English  
+            **Advanced Settings**  
+            - **Number of Key Topics:**  
+            - Range: 5 to 30 (default: 10).  
 
-    **Advanced Settings**  
-    - **Number of Key Topics:**  
-      - Range: 5 to 30 (default: 10).  
+            **4. Quiz Generator**  
+            - **Prerequisite:** A document must be embedded and ready for processing by the LLM.  
 
-    **3. Quiz Generator**  
-    - **Prerequisite:** A document must be embedded and ready for processing by the LLM.  
+            **Quiz Language**  
+            - Select language of the generated Quiz. Currently supported: English, Polish, Romanian and Bulgarian. Default: English  
 
-    **Quiz Language**  
-    - Select language of the generated Quiz. Currently supported: English, Polish, Romanian and Bulgarian. Default: English  
+            **Advanced Settings**  
+            - **Number of Questions:**  
+            - Range: 5 to 30 (default: 10).  
+            - **Difficulty Distribution:**  
+            - Default: 40% Easy, 30% Medium, 30% Hard.  
+            - Adjust the percentages as needed.  
 
-    **Advanced Settings**  
-    - **Number of Questions:**  
-      - Range: 5 to 30 (default: 10).  
-    - **Difficulty Distribution:**  
-      - Default: 40% Easy, 30% Medium, 30% Hard.  
-      - Adjust the percentages as needed.  
+            **Generating the Quiz**  
+            1. Configure the settings as desired.  
+            2. Click **Generate Quiz** and wait for the process to complete.  
+            3. Download the resulting JSON file for use in the Quiz GUI.  
 
-    **Generating the Quiz**  
-    1. Configure the settings as desired.  
-    2. Click **Generate Quiz** and wait for the process to complete.  
-    3. Download the resulting JSON file for use in the Quiz GUI.  
+            **Quiz Modes**  
+            The generated quiz can be used in:  
+            - **Examination Mode** (proctored assessment).  
+            - **Learning Mode** (self-paced practice).  
 
-    **Quiz Modes**  
-    The generated quiz can be used in:  
-    - **Examination Mode** (proctored assessment).  
-    - **Learning Mode** (self-paced practice).  
+            **5. Quiz Editor**  
+            - **Purpose:** Edit the resulting JSON Quiz file and save the edited file.  
+            - **Prerequisite:** The existing JSON Quiz file.  
 
-    **4. Quiz Editor**  
-    - **Purpose:** Edit the resulting JSON Quiz file and save the edited file.  
-    - **Prerequisite:** The existing JSON Quiz file.  
-
-    **5. Quiz GUI**  
-    Standalone application for running the Quiz in the two modes:  
-    - **Examination Mode** (proctored assessment).  
-    - **Learning Mode** (self-paced practice).  
-
-    **System requirements:** same as for the Quiz Generator  
-
-    Install dependencies by running the following command in the Windows console:  
-    ```bash  
-    pip install -r requirements.txt  
-    ```  
-
-    Navigate to the Quiz GUI directory.  
-    Launch the GUI by running:  
-    ```bash  
-    streamlit run app.py  
-    ```  
-    """)
+            **6. Quiz GUI**  
+            Standalone application for running the Quiz in the two modes:  
+            - **Examination Mode** (proctored assessment).  
+            - **Learning Mode** (self-paced practice).  
+            """)
