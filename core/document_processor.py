@@ -4,8 +4,9 @@ import os
 import time
 from time import sleep
 from app_config import MULTILINGUAL_EMBEDDING_MODEL, EMBEDDING_MODEL, API_KEY, BASE_URL, LLM_MODEL
-from core.utils import clean_document_content, chunk_content
-from core.utils import purge_database, ensure_sample_data_dir
+from app_config import SECONDARY_QUIZ_PROCESSING_PROMPT_TEMPLATE, MAIN_QUIZ_PROCESSING_PROMPT_TEMPLATE
+from core.utils import clean_document_content, chunk_content,  purge_database,  ensure_sample_data_dir
+from core.utils import  get_topic_focus_key, get_language_config, get_language_name, get_system_messages
 import tempfile
 from langchain_community.document_loaders import UnstructuredWordDocumentLoader, PyPDFLoader
 from langchain.docstore.document import Document as LangChainDocument
@@ -732,127 +733,11 @@ def generate_mcq_json(content, num_questions, difficulty_distribution, language_
     else:
         client = OpenAI(api_key=API_KEY, base_url=BASE_URL)
     
-    # Language-specific configurations
-    LANGUAGE_CONFIG = {
-                "en": {
-                    "quiz_title": "Knowledge Assessment",
-                    "difficulty_levels": ["Easy", "Medium", "Hard"],
-                    "instructions": {
-                        "create_different": "Create completely different questions than previous runs",
-                        "options": "Include 1 correct and 3 incorrect answers per question",
-                        "randomize": "Randomize correct answer positions (A-D)",
-                        "difficulty": "For each question, indicate its difficulty level in the explanation",
-                        "avoid": "Avoid starting with predictable questions",
-                        "plausible": "Ensure incorrect answers are plausible but clearly wrong",
-                        "explanations": "Make explanations thorough and educational",
-                        "uniqueness": "Ensure each question is unique and not repeated in any form",
-                        "fallback": "If needed, generate general questions about the broad topic",
-                    },
-                    "output_format": {
-                        "question": "question",
-                        "options": "options",
-                        "correct": "correct_answer",
-                        "explanation": "explanation"
-                    }
-                },
-                "de": {
-                    "quiz_title": "Wissensbewertung",
-                    "difficulty_levels": ["Einfach", "Mittel", "Schwer"],
-                    "instructions": {
-                        "create_different": "Erstelle völlig unterschiedliche Fragen als bei früheren Durchläufen",
-                        "options": "Füge pro Frage 1 richtige und 3 falsche Antworten hinzu",
-                        "randomize": "Zufällige Positionen richtiger Antworten (A-D)",
-                        "difficulty": "Indiziere für jede Frage das Schwierigkeitsniveau in der Erklärung",
-                        "avoid": "Vermeide es, mit vorhersagbaren Fragen zu beginnen",
-                        "plausible": "Stelle sicher, dass falsche Antworten plausibel, aber eindeutig falsch sind",
-                        "explanations": "Mache Erklärungen gründlich und lehrreich",
-                        "uniqueness": "Stelle sicher, dass jede Frage einzigartig ist und nicht in irgendeiner Form wiederholt wird",
-                        "fallback": "Generiere bei Bedarf allgemeine Fragen zum breiten Thema"
-                    },
-                    "output_format": {
-                        "question": "Frage",
-                        "options": "Optionen",
-                        "correct": "richtige_Antwort",
-                        "explanation": "Erklärung"
-                    }
-                },
-                "pl": {
-                    "quiz_title": "Test Wiedzy",
-                    "difficulty_levels": ["Łatwy", "Średni", "Trudny"],
-                    "instructions": {
-                        "create_different": "Stwórz zupełnie inne pytania niż w poprzednich wersjach",
-                        "options": "Dołącz 1 poprawną i 3 niepoprawne odpowiedzi na pytanie",
-                        "randomize": "Losowa pozycja poprawnej odpowiedzi (A-D)",
-                        "difficulty": "Dla każdego pytania wskaż poziom trudności w wyjaśnieniu",
-                        "avoid": "Unikaj przewidywalnych pytań na początku",
-                        "plausible": "Niepoprawne odpowiedzi powinny być prawdopodobne, ale wyraźnie błędne",
-                        "explanations": "Wyjaśnienia powinny być szczegółowe i edukacyjne",
-                        "uniqueness": "Upewnijcie się, że każde pytanie jest unikalne i nie powtarza się w żadnej formie",
-                        "fallback": "Jeśli to konieczne, wygeneruj ogólne pytania dotyczące szerokiego tematu",
-                    },
-                    "output_format": {
-                        "question": "question",
-                        "options": "options",
-                        "correct": "correct_answer",
-                        "explanation": "explanation"
-                    }
-                },
-                "ro": {
-                    "quiz_title": "Evaluare Cunoaștere",
-                    "difficulty_levels": ["Ușor", "Mediu", "Dificil"],
-                    "instructions": {
-                        "create_different": "Creați întrebări complet diferite de rulările anterioare",
-                        "options": "Includeți 1 răspuns corect și 3 incorecte pentru fiecare întrebare",
-                        "randomize": "Poziția aleatorie a răspunsului corect (A-D)",
-                        "difficulty": "Pentru fiecare întrebare, indicați nivelul de dificultate în explicație",
-                        "avoid": "Evitați întrebări previzibile la început",
-                        "plausible": "Asigurați-vă că răspunsurile incorecte sunt plauzibile dar clar greșite",
-                        "explanations": "Faceți explicațiile detaliate și educative",
-                        "uniqueness": "Asigurați-vă că fiecare întrebare este unică și nu se repetă în nicio formă",
-                        "fallback": "Dacă este necesar, generați întrebări generale despre subiectul larg",
-                    },
-                    "output_format": {
-                        "question": "question",
-                        "options": "options",
-                        "correct": "correct_answer",
-                        "explanation": "explanation"
-                    }
-                },
-                "bg": {
-                    "quiz_title": "Тест за Знания",
-                    "difficulty_levels": ["Лесен", "Среден", "Труден"],
-                    "instructions": {
-                        "create_different": "Създайте напълно различни въпроси от предишните тестове",
-                        "options": "Включете 1 верен и 3 грешни отговора на въпрос",
-                        "randomize": "Случайно разпределение на правилните отговори (A-D)",
-                        "difficulty": "За всеки въпрос посочете нивото на трудност в обяснението",
-                        "avoid": "Избягвайте предвидими въпроси в началото",
-                        "plausible": "Грешните отговори трябва да са правдоподобни, но ясно грешни",
-                        "explanations": "Обясненията трябва да са подробни и образователни",
-                        "uniqueness": "Уверете се, че всеки въпрос е уникален и не се повтаря под никаква форма",
-                        "fallback": "Ако е необходимо, генерирайте общи въпроси относно широката тема",
-                    },
-                    "output_format": {
-                        "question": "question",
-                        "options": "options",
-                        "correct": "correct_answer",
-                        "explanation": "explanation"
-                    }
-                }
-            }
+    language_name = get_language_name(language_code)
+    
+    config = get_language_config(language_code)
 
-    config = LANGUAGE_CONFIG.get(language_code, LANGUAGE_CONFIG["en"])
-
-    # System messages
-    system_messages = {
-            "en": "You are an expert quiz designer who creates pedagogically effective assessments.",
-            "de": "Du bist ein Experte im Quizdesign und erstellst pädagogisch effektive Bewertungen.",
-            "pl": "Jesteś ekspertem od tworzenia skutecznych dydaktycznie testów i quizów.",
-            "ro": "Ești un expert în crearea de evaluări pedagogice eficiente.",
-            "bg": "Ти си експерт в създаването на педагогически ефективни викторини и куизове."
-        }
-
-    system_message = system_messages.get(language_code, system_messages["en"])
+    system_message = get_system_messages(language_code)
 
     # Difficulty prompt
     difficulty_instructions = []
@@ -878,17 +763,9 @@ def generate_mcq_json(content, num_questions, difficulty_distribution, language_
             
     topic_focus_prompt = ""
     if focus_topics and len(focus_topics) > 0:
-            topic_focus_key = {
-                "en": "Focus specifically on these key topics:",
-                "de": "Konzentriere dich speziell auf diese Schlüsselthemen:",
-                "pl": "Skup się szczególnie na tych tematach:",
-                "ro": "Concentrați-vă în special pe aceste subiecte cheie:",
-                "bg": "Концентрирай се специално върху тези ключови теми.:"
-            }.get(language_code, "Focus specifically on these key topics:")
-
+            topic_focus_key = get_topic_focus_key(language_code)
             topic_focus_prompt = f"\n- {topic_focus_key} {', '.join(focus_topics)}"
     
-    #if len(content) > 32000:  
     print("Starting content chunking")
     start_time = time.time()
     content_chunks = chunk_content(content)
@@ -902,14 +779,10 @@ def generate_mcq_json(content, num_questions, difficulty_distribution, language_
     fallback_attempts = 2  # Number of attempts to get fallback questions
     print(f"Content chunked in {len(content_chunks)} chunks")
     remaining_questions = num_questions
-        # First pass - try to generate from content chunks
+    # First pass - try to generate from content chunks
     for chunk in content_chunks:
             try:               
-                print(f"Processing chunk {processed_chunks + 1}")
-                # Calculate remaining questions needed
-                #remaining_questions = num_questions - len(all_questions)
-                #print(f"Remaining questions {remaining_questions}")
-             
+                print(f"Processing chunk {processed_chunks + 1}")            
                 attempt = 0
                 # Try to generate questions from this chunk
                 while attempt <= retry_attempts:
@@ -918,55 +791,24 @@ def generate_mcq_json(content, num_questions, difficulty_distribution, language_
                         break
                     random_seed = random.randint(0, 1000)
                     timestamp = int(time.time())
-                    prompt = f"""
-                    Generate {remaining_questions} unique quiz questions in {language_code} with these rules:
-                    - RANDOMIZE correct answer positions (approximately equal distribution of A/B/C/D)
-                    - Correct answers should NOT follow patterns (e.g., not all B's)
-                    - When possible, distribute as:
-                    - 25% A correct
-                    - 25% B correct
-                    - 25% C correct
-                    - 25% D correct 
-                    from this content chunk:
-                    {chunk}
-                    Random seed: {random_seed}, Timestamp: {timestamp}
-                    Instructions:
-                    - {config['instructions']['create_different']}
-                    - {config['instructions']['options']}
-                    - {config['instructions']['randomize']}
-                    - Difficulty distribution:
-                    - {difficulty_prompt}
-                    {topic_focus_prompt}
-                    - {config['instructions']['difficulty']}
-                    - {config['instructions']['avoid']}
-                    - {config['instructions']['plausible']}
-                    - {config['instructions']['explanations']}
-                    - {config['instructions']['uniqueness']}
-
-                    Important: 
-                    - Before generating each question, check that it hasn't been asked before in any form
-                    - Questions should test different knowledge aspects even if they cover similar topics
-                    - If you can't generate enough questions from this specific content, indicate that
-
-                    Return JSON format:
-                    {{
-                        "questions": [
-                            {{
-                                "question": "text",
-                                "options": {{
-                                    "A": "option 1",
-                                    "B": "option 2", 
-                                    "C": "option 3",
-                                    "D": "option 4"
-                                }},
-                                "correct_answer": "A-D",
-                                "explanation": "text",
-                                "difficulty": "Easy/Medium/Hard"
-                            }}
-                        ],
-                        "content_adequate": true/false (whether this content could yield more questions)
-                    }}
-                    """
+                    
+                    prompt = MAIN_QUIZ_PROCESSING_PROMPT_TEMPLATE.format(
+                            remaining_questions=remaining_questions,
+                            language_name=language_name,
+                            chunk=chunk,
+                            random_seed=random_seed,
+                            timestamp=timestamp,
+                            create_different=config["instructions"]["create_different"],
+                            options=config["instructions"]["options"],
+                            randomize=config["instructions"]["randomize"],
+                            difficulty_prompt=difficulty_prompt,
+                            topic_focus_prompt=topic_focus_prompt,
+                            difficulty=config["instructions"]["difficulty"],
+                            avoid=config["instructions"]["avoid"],
+                            plausible=config["instructions"]["plausible"],
+                            explanations=config["instructions"]["explanations"],
+                            uniqueness=config["instructions"]["uniqueness"],
+                        )
                     start_time = time.time()
                     print("Calling API")
                     #print(prompt)
@@ -1012,40 +854,29 @@ def generate_mcq_json(content, num_questions, difficulty_distribution, language_
                 st.warning(f"Failed to process chunk {processed_chunks + 1}: {str(e)}")
                 continue
 
-    # Second pass - generate fallback questions if we didn't get enough
+    # Generate fallback questions if we didn't get enough from the chunks
     if len(all_questions) < num_questions:
             remaining = num_questions - len(all_questions)
             print(f"Generating {remaining} fallback questions to reach requested total")
-            st.info(f"Generating {remaining} fallback questions to reach requested total")
-
+            focus_topics_str = ', '.join(focus_topics) if focus_topics else 'General concepts'
+            existing_questions_str = ', '.join(q['question'][:50] + '...' for q in all_questions)
             for attempt in range(fallback_attempts):
-                prompt = f"""
-                Generate {remaining} additional unique quiz questions in {language_code} about these topics:
-                {', '.join(focus_topics) if focus_topics else 'General concepts'}
-
-                Instructions:
-                - {config['instructions']['create_different']}
-                - {config['instructions']['options']}
-                - {config['instructions']['randomize']}
-                - Difficulty distribution:
-                - {difficulty_prompt}
-                - {config['instructions']['difficulty']}
-                - {config['instructions']['avoid']}
-                - {config['instructions']['plausible']}
-                - {config['instructions']['explanations']}
-                - {config['instructions']['uniqueness']}
-                - {config['instructions']['fallback']}
-
-                Important:
-                - These should be general questions about the topic area
-                - Ensure they don't duplicate any existing questions
-                - Maintain the requested difficulty distribution
-
-                Existing questions (do not duplicate these):
-                {', '.join(q['question'][:50] + '...' for q in all_questions)}
-
-                Return JSON format same as before.
-                """
+                prompt = SECONDARY_QUIZ_PROCESSING_PROMPT_TEMPLATE.format(
+                        remaining=remaining,
+                        language_name=language_name,
+                        focus_topics=focus_topics_str,
+                        create_different=config['instructions']['create_different'],
+                        options=config['instructions']['options'],
+                        randomize=config['instructions']['randomize'],
+                        difficulty_prompt=difficulty_prompt,
+                        difficulty=config['instructions']['difficulty'],
+                        avoid=config['instructions']['avoid'],
+                        plausible=config['instructions']['plausible'],
+                        explanations=config['instructions']['explanations'],
+                        uniqueness=config['instructions']['uniqueness'],
+                        fallback=config['instructions']['fallback'],
+                        existing_questions=existing_questions_str,
+                    )
 
                 try:
                     response = client.chat.completions.create(
@@ -1055,7 +886,7 @@ def generate_mcq_json(content, num_questions, difficulty_distribution, language_
                             {"role": "user", "content": prompt}
                         ],
                         response_format={"type": "json_object"},
-                        temperature=0.5  # Slightly higher temperature for more variety
+                        temperature=0.7  
                     )
 
                     result = json.loads(response.choices[0].message.content)
@@ -1099,9 +930,7 @@ def generate_mcq_json(content, num_questions, difficulty_distribution, language_
                         f"{difficulty_distribution['medium']} {config['difficulty_levels'][1]}/"
                         f"{difficulty_distribution['hard']} {config['difficulty_levels'][2]})",
             "questions": final_questions[:num_questions],
-            "focused_topics": focus_topics if focus_topics else "All topics",
-            "note": f"Generated from {processed_chunks} content chunks" + 
-                (" + fallback questions" if len(final_questions) > len(all_questions) - len(final_questions) else "")
+            "focused_topics": focus_topics if focus_topics else "All topics"
         }
 
     return quiz_data

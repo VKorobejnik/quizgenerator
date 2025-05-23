@@ -6,7 +6,7 @@ import time
 import shutil
 from streamlit_js_eval import streamlit_js_eval
 from app_config import SUPPORTED_LANGUAGES
-from  core.utils import database_exists, purge_database, save_quiz_file
+from  core.utils import database_exists, purge_database, get_quiz_file_name
 from core.utils import database_exists, get_ui_text, validate_json, cleanup_memory
 from core.document_processor import process_document_with_semantic_preprocessing, process_document, extract_text_from_file, process_start_document, load_vector_db, query_faiss_for_quiz, generate_mcq_json
 
@@ -472,8 +472,8 @@ def quiz_generator_tab():
                         print(f"Quiz generated in {end_time - start_time:.2f} seconds")
                         
                         if quiz_data:
-                            filename = save_quiz_file(quiz_data)
-                            st.success(f"Quiz saved to {filename}")
+                            filename = get_quiz_file_name(language_code)
+                            st.success(f"Quiz JSON file {filename} generated")
                             st.download_button(
                                 label="Download Quiz JSON",
                                 data=json.dumps(quiz_data, indent=2),

@@ -35,7 +35,7 @@ def login_page():
                     if username in user_data and verify_password(password, user_data[username]):
                         st.session_state.logged_in = True
                         st.session_state.username = username
-                        st.success("✅ Login successful!")
+                        st.success("✅ Logged in successfully!")
                         time.sleep(1)
                         st.rerun()
                     else:

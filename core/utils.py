@@ -5,6 +5,20 @@ import streamlit as st
 import json
 from datetime import datetime
 import gc
+from app_config import LANGUAGE_CODES, LANGUAGE_CONFIG, TOPIC_FOCUS_KEY, SYSTEM_MESSAGES
+
+
+def get_language_name(language_code="en"):
+    return LANGUAGE_CODES.get(language_code)
+
+def get_language_config(language_code="en"):
+    return LANGUAGE_CONFIG.get(language_code)
+
+def get_system_messages(language_code="en"):
+    return SYSTEM_MESSAGES.get(language_code)
+
+def get_topic_focus_key(language_code="en"):
+    return TOPIC_FOCUS_KEY.get(language_code)
 
 def get_ui_text(key, language_code="en"):
     """Helper function to get localized UI text"""
@@ -178,11 +192,8 @@ def chunk_content(text, max_chars=30000, min_chunk_size=1000):
 
     return chunks
 
-def save_quiz_file(quiz_data):
-    os.makedirs("quiz_data", exist_ok=True)
-    filename = f"quiz_data/quiz_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
-    with open(filename, "w") as f:
-        json.dump(quiz_data, f, indent=2)
+def get_quiz_file_name(language_code="en"):
+    filename = f"{language_code}_quiz_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
     return filename  
 
 def cleanup_memory():
