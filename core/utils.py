@@ -5,6 +5,8 @@ import streamlit as st
 import json
 from datetime import datetime
 import gc
+import ctypes
+import ctypes.util
 from app_config import LANGUAGE_CODES, LANGUAGE_CONFIG, TOPIC_FOCUS_KEY, SYSTEM_MESSAGES
 
 
@@ -197,5 +199,15 @@ def get_quiz_file_name(language_code="en"):
     return filename  
 
 def cleanup_memory():
-    gc.collect()
     st.cache_data.clear()
+    gc.collect()
+    # Manually trigger Python's memory allocator to release blocks
+    try:
+        libc_path = ctypes.util.find_library('c')
+        if libc_path is not None:
+            print(f"Found C library")
+            libc = ctypes.CDLL(libc_path)
+            if hasattr(libc, 'malloc_trim'):
+                libc.malloc_trim(0)  # Release memory to OS (Linux/glibc)
+    except Exception as e:
+        print(f"Could not release memory via malloc_trim: {e}")
