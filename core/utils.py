@@ -127,16 +127,6 @@ def purge_database():
                     shutil.rmtree(file_path)
             except Exception as e:
                 return False, f"Failed to delete {file_path}: {e}"
-        #Remove all generated quiz data
-        for filename in os.listdir("quiz_data"):
-            file_path = os.path.join("quiz_data", filename)
-            try:
-                if os.path.isfile(file_path) or os.path.islink(file_path):
-                    os.unlink(file_path)
-                elif os.path.isdir(file_path):
-                    shutil.rmtree(file_path)
-            except Exception as e:
-                return False, f"Failed to delete {file_path}: {e}"
 
         # Update session state to reflect database deletion
         KEEP_KEYS = ['logged_in', 'username']
